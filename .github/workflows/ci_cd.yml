@@ -48,7 +48,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: Revathy-venugopal.tex
+          root_file: revathy-venugopal.tex
           working_directory: "."
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
 
@@ -75,4 +75,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            .out/revathy-venugopal.pdf
+            out/revathy-venugopal.pdf

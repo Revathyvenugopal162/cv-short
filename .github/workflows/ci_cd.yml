@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Revathy-venugopal-CV-MAKEFILE-LINUX
-          path: revathy-venugopal.pdf
+          path: src/resume/out/revathy-venugopal.pdf
           retention-days: 7
 
   build_latex: 
@@ -48,8 +48,8 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: src/resume/revathy-venugopal.tex
-          working_directory: "."
+          root_file: revathy-venugopal.tex
+          working_directory: src/resume
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
 
       - name: Upload PDF as an artifact

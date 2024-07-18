@@ -74,7 +74,7 @@ jobs:
           path: src/resume/out/revathy-venugopal.pdf
           retention-days: 7
 
-        -name: Prepare for deployment
+      - name: Prepare for deployment
         run: |
           mkdir -p site
           cp -r _site/* site/

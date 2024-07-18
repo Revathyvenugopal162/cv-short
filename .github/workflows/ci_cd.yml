@@ -58,6 +58,10 @@ jobs:
           working_directory: src/resume
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
 
+      - name: Create png files
+        run: |
+          convert -density 150 -scene 1 src/resume/out/revathy-venugopal.pdf src/resume/out/revathy-venugopal.png
+
       - name: "Set up Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
         with:

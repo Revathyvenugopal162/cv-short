@@ -5,8 +5,7 @@ website:
   title: "My Website"
   sidebar: 
     contents: 
-      - about.qmd
-      - revathy-venugopal.qmd
+      - about/about.qmd
 
 format: 
   html: 

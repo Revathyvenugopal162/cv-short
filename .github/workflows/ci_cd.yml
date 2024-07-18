@@ -48,7 +48,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: revathy-venugopal.tex
+          root_file: src/resume/revathy-venugopal.tex
           working_directory: "."
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
 

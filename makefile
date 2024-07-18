@@ -16,8 +16,9 @@ all: clean Revathy-venugopal.pdf
 # -interaction=nonstopmode keeps the pdflatex backend from stopping at a
 # missing file reference and interactively asking you for an alternative.
 
-Revathy-venugopal.pdf: revathy-venugopal.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make revathy-venugopal.tex -cd -auxdir=out -outdir=out
+Revathy-venugopal.pdf: src/resume/revathy-venugopal.tex
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make src/resume/revathy-venugopal.tex -cd -auxdir=out -outdir=out
+	convert -density 150 -scene 1 src/resume/out/revathy-venugopal.pdf src/resume/out/revathy-venugopal.png
 
 clean:
-	latexmk -CA revathy-venugopal.tex -cd -auxdir=out -outdir=out
+	latexmk -CA src/resume/revathy-venugopal.tex -cd -auxdir=out -outdir=out

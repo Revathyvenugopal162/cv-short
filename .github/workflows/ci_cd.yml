@@ -26,6 +26,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y latexmk texlive-fonts-extra
+          sudo apt install graphicsmagick-imagemagick-compat
 
       - name: Run the Makefile
         run: |
@@ -35,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Revathy-venugopal-CV-MAKEFILE-LINUX
-          path: revathy-venugopal.pdf
+          path: src/resume/out/revathy-venugopal.pdf
           retention-days: 7
 
   build_latex: 
@@ -45,19 +46,49 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
 
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
+      - name: install latexmk
+        run: |
+          sudo apt-get update -y
+          sudo apt install graphicsmagick-imagemagick-compat
+
+      - name: Install LaTeX build tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y latexmk texlive-fonts-extra
+          sudo apt install graphicsmagick-imagemagick-compat
+
+      - name: Run the Makefile
+        run: |
+          make all
+
+      - name: "Set up Quarto"
+        uses: quarto-dev/quarto-actions/setup@v2
         with:
-          root_file: revathy-venugopal.tex
-          working_directory: "."
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
+          tinytex: true
+
+      - name: "Render the website"
+        run: quarto render
+
+      - name: "Upload the website"
+        uses: actions/upload-artifact@v4
+        with:
+          name: Revathy-venugopal-CV-WEBSITE
+          path: _site/
+          retention-days: 7
 
       - name: Upload PDF as an artifact
         uses: actions/upload-artifact@v4
         with:
           name: Revathy-venugopal-CV
-          path: out/revathy-venugopal.pdf
+          path: src/resume/out/revathy-venugopal.pdf
           retention-days: 7
+
+      - name: Prepare for deployment
+        run: |
+          mkdir -p site
+          cp -r _site/* site/
+          cp src/resume/out/revathy-venugopal.pdf site/
+          cp src/resume/out/revathy-venugopal.png site/
 
       - name: Deploy CV to gh-pages
         if: github.ref == 'refs/heads/main'
@@ -65,9 +96,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: out
+          folder: site
           clean: true
-          clean-exclude: index.html
           single-commit: true
 
       - name: Create a CV release
@@ -75,4 +105,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            out/revathy-venugopal.pdf
+            ./src/resume/out/revathy-venugopal.pdf

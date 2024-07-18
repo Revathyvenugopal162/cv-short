@@ -51,16 +51,15 @@ jobs:
           sudo apt-get update -y
           sudo apt install graphicsmagick-imagemagick-compat
 
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: revathy-venugopal.tex
-          working_directory: src/resume
-          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
-
-      - name: Create png files
+      - name: Install LaTeX build tools
         run: |
-          convert -density 150 -scene 1 src/resume/out/revathy-venugopal.pdf src/resume/out/revathy-venugopal.png
+          sudo apt-get update -y
+          sudo apt-get install -y latexmk texlive-fonts-extra
+          sudo apt install graphicsmagick-imagemagick-compat
+
+      - name: Run the Makefile
+        run: |
+          make all
 
       - name: "Set up Quarto"
         uses: quarto-dev/quarto-actions/setup@v2

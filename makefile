@@ -18,6 +18,7 @@ all: clean Revathy-venugopal.pdf
 
 Revathy-venugopal.pdf: src/resume/revathy-venugopal.tex
 	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make src/resume/revathy-venugopal.tex -cd -auxdir=out -outdir=out
+	convert -density 150 -scene 1 src/resume/out/revathy-venugopal.pdf src/resume/out/revathy-venugopal.png
 
 clean:
 	latexmk -CA src/resume/revathy-venugopal.tex -cd -auxdir=out -outdir=out

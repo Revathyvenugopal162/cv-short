@@ -79,9 +79,10 @@ jobs:
           mkdir -p site
           cp -r _site/* site/
           cp src/resume/out/revathy-venugopal.pdf site/
+          cp src/resume/out/revathy-venugopal.png site/
 
       - name: Deploy CV to gh-pages
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4.6.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

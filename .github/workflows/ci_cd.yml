@@ -106,5 +106,3 @@ jobs:
         with:
           files: |
             ./src/resume/out/revathy-venugopal.pdf
-
-  

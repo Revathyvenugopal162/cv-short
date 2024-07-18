@@ -26,6 +26,7 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y latexmk texlive-fonts-extra
+          sudo apt install graphicsmagick-imagemagick-compat
 
       - name: Run the Makefile
         run: |
@@ -44,6 +45,11 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
+
+      - name: install latexmk
+        run: |
+          sudo apt-get update -y
+          sudo apt install graphicsmagick-imagemagick-compat
 
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3

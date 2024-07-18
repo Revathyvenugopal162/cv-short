@@ -52,6 +52,21 @@ jobs:
           working_directory: src/resume
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode -outdir=out
 
+      - name: "Set up Quarto"
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+
+      - name: "Render the website"
+        run: quarto render
+
+      - name: "Upload the website"
+        uses: actions/upload-artifact@v4
+        with:
+          name: Revathy-venugopal-CV-WEBSITE
+          path: _site/
+          retention-days: 7
+
       - name: Upload PDF as an artifact
         uses: actions/upload-artifact@v4
         with:
@@ -59,15 +74,20 @@ jobs:
           path: src/resume/out/revathy-venugopal.pdf
           retention-days: 7
 
+        -name: Prepare for deployment
+        run: |
+          mkdir -p site
+          cp -r _site/* site/
+          cp src/resume/out/revathy-venugopal.pdf site/
+
       - name: Deploy CV to gh-pages
-        if: github.ref == 'refs/heads/main'
+        # if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4.6.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: src/resume/out
+          folder: site
           clean: true
-          clean-exclude: index.html
           single-commit: true
 
       - name: Create a CV release
@@ -76,3 +96,5 @@ jobs:
         with:
           files: |
             ./src/resume/out/revathy-venugopal.pdf
+
+  
